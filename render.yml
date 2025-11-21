@@ -1,0 +1,45 @@
+services:
+  # Banco de dados PostgreSQL
+  - type: pserv
+    name: gestaofrotas-db
+    env: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: POSTGRES_USER
+        value: admin
+      - key: POSTGRES_PASSWORD
+        generateValue: true
+      - key: POSTGRES_DB
+        value: gestaofrotas
+
+  # API Spring Boot
+  - type: web
+    name: gestaofrotas-api
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: gestaofrotas-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        value: admin
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: gestaofrotas-db
+          property: password
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: PORT
+        value: 8080
+
+databases:
+  - name: gestaofrotas-db
+    databaseName: gestaofrotas
+    user: admin
+    plan: free
+    region: oregon
