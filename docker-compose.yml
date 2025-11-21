@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14.1-alpine
+    container_name: gestaofrotas-db
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=gestaofrotas
+    ports:
+      - "5423:5432"
+    volumes:
+      - gestaofrotas-db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:9.8
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+
+      PGADMIN_CONFIG_SERVER_MODE: 'True'
+
+  app:
+    build: .
+    container_name: gestaofrotas-api
+    restart: on-failure
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/gestaofrotas
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+volumes:
+  gestaofrotas-db-data:
