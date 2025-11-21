@@ -63,7 +63,6 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite preflight
                     .requestMatchers("/api/auth/**").permitAll() // Permite login
                     .requestMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()
