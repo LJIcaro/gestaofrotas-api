@@ -43,13 +43,16 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        // Permitir o frontend local e outros origins (aceita padrões); em produção restrinja para domínios confiáveis
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:4200", "https://*.fly.dev", "https://gestaofrotas-ui.fly.dev"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        
+        configuration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
-        
+        // Registrar para todas as rotas para garantir que endpoints fora de /api/** também retornem CORS
+        source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 
@@ -63,7 +66,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/api/auth/**").permitAll() // Permite login
+                    .requestMatchers("/auth/**", "/api/auth/**").permitAll() // Permite login (suporta /auth/ e /api/auth/)
                     .requestMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()
             )
