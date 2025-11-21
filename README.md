@@ -11,6 +11,12 @@ Este projeto foi desenvolvido como material avalitivo para a disciplina de Progr
 -Ícaro Lima de Jesus - 202308425951
 -Ruan Santos Müller de Almeida - 202308425951
 
+## Frontend
+
+O código do frontend (interface da aplicação) está disponível neste repositório:
+
+- https://github.com/LJIcaro/gestaofrotas-ui
+
 ## Funcionalidades Principais
 
 -   **Autenticação e Autorização:** Sistema seguro baseado em papéis (Administrador, Motorista) utilizando JSON Web Tokens (JWT).
