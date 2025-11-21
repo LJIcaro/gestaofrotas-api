@@ -43,8 +43,8 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permitir o frontend local e outros origins (aceita padrões); em produção restrinja para domínios confiáveis
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:4200", "https://*.fly.dev", "https://gestaofrotas-ui.fly.dev"));
+    // Permitir qualquer origem (DESENVOLVIMENTO). Em produção restrinja para domínios confiáveis.
+    configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
