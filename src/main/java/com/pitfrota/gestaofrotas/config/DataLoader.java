@@ -189,7 +189,7 @@ public class DataLoader implements CommandLineRunner {
                 criarAgendamentoFinalizado(motoristas.get(3), veiculos.get(1), LocalDateTime.now().minusDays(3),
                                 "Cliente E", 45200, 45400);
                 criarAgendamento(motoristas.get(4), veiculos.get(2), LocalDateTime.now().plusDays(4), "Sede da Empresa",
-                                StatusAgendamento.CANCELADO);
+                                StatusAgendamento.AGENDADO);
                 logger.info("10 agendamentos criados.");
 
                 // --- 3 Registros de Manutenção ---
