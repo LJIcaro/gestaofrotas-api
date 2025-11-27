@@ -102,6 +102,10 @@ docker-compose up -d db
 ./mvnw spring-boot:run
 ```
 
+### Link da Aplicação em Cloud
+
+https://pitfrotas.online/
+
 
 ### Credenciais de Teste
 
